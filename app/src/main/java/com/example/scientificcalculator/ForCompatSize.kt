@@ -1,9 +1,18 @@
 package com.example.scientificcalculator
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Easing
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -11,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,7 +29,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -42,6 +51,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.scientificcalculator.ui.theme.grey800
 import com.example.scientificcalculator.ui.theme.grey900
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 private val compactList = GetButtonList().compactButtonList()
@@ -68,6 +79,7 @@ fun ForCompact() {
         var isCompact by remember {
             mutableStateOf(true)
         }
+
         var isVisibleExtraFunction by remember {
             mutableStateOf(false)
         }
@@ -81,6 +93,7 @@ fun ForCompact() {
         var isEvaluated by remember { mutableStateOf(false) }
 
         var isBracketed by remember { mutableStateOf(false) }
+
         Column(modifier = Modifier
             .fillMaxWidth()
             .weight(if (isVisibleExtraFunction) .28f else .33f),
@@ -105,10 +118,24 @@ fun ForCompact() {
         }
 
         if (isVisibleExtraFunction){
-            LazyHorizontalGrid(rows = GridCells.Fixed(2), modifier = Modifier
-                .weight(.23f)
-                .fillMaxWidth()
-                .background(grey800), contentPadding = PaddingValues(top = 8.dp, end = 16.dp, start = 16.dp)
+
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(2),
+                modifier = Modifier
+                    .weight(.23f)
+                    .animateContentSize(
+                        animationSpec = tween(
+                            durationMillis = 450,
+                            easing = FastOutSlowInEasing
+                        )
+                    )
+                    .fillMaxWidth()
+                    .background(grey800),
+                contentPadding = PaddingValues(
+                    16.dp,
+                    8.dp,
+                    16.dp
+                )
             ) {
                 items(extraButtonsList.size){
                     ExtraButtons(it = it){ str ->
@@ -137,7 +164,14 @@ fun ForCompact() {
         LazyVerticalGrid(
             columns = GridCells.Fixed(columns),
             contentPadding = PaddingValues(start = 16.dp, bottom = 16.dp, end = 16.dp, top = 8.dp),
-            modifier = Modifier.background(grey800)
+            modifier = Modifier
+                .background(grey800)
+                .animateContentSize(
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutLinearInEasing
+                    )
+                )
         ) {
             items(itemCount) { index ->
                 Buttons(buttonFeature = buttonList[index]){
@@ -192,26 +226,22 @@ fun ExtraButtons(it: Int, onButtonClick: (string: String) -> Unit) {
             .padding(3.dp),
         colors = ButtonDefaults.buttonColors(containerColor = extraButtonsList[it].buttonColor)
     ) {
-        Text(text = extraButtonsList[it].buttonText, fontSize = 18.sp)
+        Text(text = extraButtonsList[it].buttonText, fontSize = 18.sp, color = Color.White)
     }
 }
 
 @Composable
 fun Buttons(buttonFeature: ButtonFeature, onButtonClick : (string: String) -> Unit){
-    Box(
+    Button(
+        onClick = {
+            onButtonClick(buttonFeature.buttonText)
+        },
+        contentPadding = PaddingValues(16.dp),
         modifier = Modifier
-            .padding(3.dp)
+            .padding(5.dp)
             .aspectRatio(1f)
-            .height(25.dp)
-            .background(
-                color = buttonFeature.buttonColor,
-                shape = CircleShape
-            )
-            .clickable {
-                onButtonClick(buttonFeature.buttonText)
-            }
-            .padding(8.dp),
-        contentAlignment = Alignment.Center
+            .background(color = grey800, shape = CircleShape),
+        colors = ButtonDefaults.buttonColors(containerColor = buttonFeature.buttonColor)
     ){
         if (buttonFeature.buttonText == "X"){
             Icon(
@@ -230,7 +260,7 @@ fun Buttons(buttonFeature: ButtonFeature, onButtonClick : (string: String) -> Un
         }
         if (buttonFeature.buttonText == ""){
             Icon(
-                painter = painterResource(id = R.drawable.application),
+                painter = painterResource(id = R.drawable.add),
                 contentDescription = "more",
                 tint = Color.White,
                 modifier = Modifier.size(30.dp)

@@ -1,13 +1,11 @@
 package com.example.scientificcalculator
 
-import android.net.wifi.hotspot2.pps.HomeSp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,25 +19,15 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.List
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.example.scientificcalculator.ui.theme.ScientificCalculatorTheme
 import com.example.scientificcalculator.ui.theme.grey50
-import com.example.scientificcalculator.ui.theme.grey500
-import com.example.scientificcalculator.ui.theme.grey800
 import com.example.scientificcalculator.ui.theme.grey900
-import com.example.scientificcalculator.ui.theme.veryDarkGray
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class)
@@ -49,37 +37,40 @@ class MainActivity : ComponentActivity() {
             ScientificCalculatorTheme {
                 val pagerState = rememberPagerState()
 
-                Column(modifier = Modifier.fillMaxSize()){
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .background(grey900)){
+
 
                     Row (
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(grey900)
-                            .padding(10.dp),
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
-                    ){
-                        Row (
-                            verticalAlignment = Alignment.CenterVertically,
+                        ){
+                        Icon(
+                            imageVector =
+                            if (pagerState.currentPage == 0) Icons.Filled.Home else Icons.Outlined.Home,
+                            contentDescription = "Home",
+                            tint = grey50,
+                            modifier = Modifier.size(30.dp)
 
-                            ){
-                            Icon(
-                                imageVector =
-                                if (pagerState.currentPage == 0) Icons.Filled.Home else Icons.Outlined.Home,
-                                contentDescription = "Home",
-                                tint = grey50,
-                                modifier = Modifier.size(30.dp)
+                        )
+                        Spacer(modifier = Modifier.width(15.dp))
+                        Icon(
+                            if (pagerState.currentPage == 1) painterResource(id = R.drawable.top_bar_2) else painterResource(
+                                id = R.drawable.top_bar_1,
 
-                            )
-                            Spacer(modifier = Modifier.width(15.dp))
-                            Icon(
-                                imageVector =
-                                if (pagerState.currentPage == 1) Icons.Filled.List else Icons.Outlined.List,
-                                contentDescription = "More",
-                                tint = grey50,
-                                modifier = Modifier.size(30.dp)
-                            )
-                        }
+                            ),
+                            "More",
+                            Modifier.size(25.dp),
+                            grey50
+                        )
+                        
+                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "About", tint = Color.White)
                     }
+
                     HorizontalPager(
                         pageCount = 2,
                         state = pagerState
