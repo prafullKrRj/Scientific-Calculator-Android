@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.scientificcalculator.Conversions.UnitConverterScreen
+import com.example.scientificcalculator.HomeScreen.HomeScreen
 import com.example.scientificcalculator.ui.theme.ScientificCalculatorTheme
 import com.example.scientificcalculator.ui.theme.grey50
 import com.example.scientificcalculator.ui.theme.grey900

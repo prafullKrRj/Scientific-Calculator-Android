@@ -1,10 +1,8 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.Conversions
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,21 +32,23 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.AgeConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.AreaC
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.BMI
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.DataConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.LengthConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.NumeralSystem
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.SpeedConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.TemperatureConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.TimeConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.VolumeConverter
+import com.example.scientificcalculator.Data.ConversionDataIterms.UnitConversionItems
+import com.example.scientificcalculator.Data.ScreenCompatibility.WindowInfo
+import com.example.scientificcalculator.Data.ScreenCompatibility.rememberWindowInfo
 import com.example.scientificcalculator.Navigation.Converters
-import com.example.scientificcalculator.UnirConverterUIs.AgeConverter
-import com.example.scientificcalculator.UnirConverterUIs.AreaC
-import com.example.scientificcalculator.UnirConverterUIs.BMI
-import com.example.scientificcalculator.UnirConverterUIs.DataConverter
-import com.example.scientificcalculator.UnirConverterUIs.LengthConverter
-import com.example.scientificcalculator.UnirConverterUIs.NumeralSystem
-import com.example.scientificcalculator.UnirConverterUIs.SpeedConverter
-import com.example.scientificcalculator.UnirConverterUIs.TemperatureConverter
-import com.example.scientificcalculator.UnirConverterUIs.TimeConverter
-import com.example.scientificcalculator.UnirConverterUIs.VolumeConverter
+import com.example.scientificcalculator.R
 import com.example.scientificcalculator.ui.theme.grey800
-import com.example.scientificcalculator.ui.theme.grey900
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -93,7 +92,7 @@ fun UnitConverterScreen() {
             AgeConverter()
         }
         composable(Converters.Area.route){
-            AreaC()
+            AreaC(Converters.Area.route, navController)
         }
         composable(Converters.BMI.route){
             BMI()

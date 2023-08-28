@@ -1,4 +1,4 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.Data.ScreenCompatibility
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun rememberWindowInfo() : WindowInfo{
+fun rememberWindowInfo() : WindowInfo {
     val configuration = LocalConfiguration.current
     return WindowInfo(
         screenHeightInfo =

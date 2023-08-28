@@ -1,18 +1,11 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.HomeScreen
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -20,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -49,10 +41,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.scientificcalculator.Data.HomeScreenDataItems.ButtonFeature
+import com.example.scientificcalculator.Data.HomeScreenDataItems.GetButtonList
+import com.example.scientificcalculator.R
 import com.example.scientificcalculator.ui.theme.grey800
 import com.example.scientificcalculator.ui.theme.grey900
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.faendir.rhino_android.RhinoAndroidHelper
+import org.mozilla.javascript.ImporterTopLevel
 
 
 private val compactList = GetButtonList().compactButtonList()
@@ -94,6 +89,9 @@ fun ForCompact() {
 
         var isBracketed by remember { mutableStateOf(false) }
 
+        if (isEvaluated){
+            upperText = eval(upperText)
+        }
         Column(modifier = Modifier
             .fillMaxWidth()
             .weight(if (isVisibleExtraFunction) .28f else .33f),
@@ -202,15 +200,28 @@ fun ForCompact() {
                             }
                         }
                     }
-                    lowerText = upperText
+                    lowerText = eval(upperText)
                 }
             }
         }
     }
 }
-
-fun evaluate(string: String): String{
-    return " "
+fun eval(expression: String) : String{
+    if (!expression.isEmpty()){
+        var finalResult: String = expression
+        val rhinoAndroidHelper = RhinoAndroidHelper()
+        val context = rhinoAndroidHelper.enterContext()
+        val scope = ImporterTopLevel(context)
+        try {
+            context.optimizationLevel
+            val res = context.evaluateString(scope, expression, "Javascript", 1, null)
+            finalResult = res.toString()
+        }catch (e: Exception){
+            finalResult
+        }
+        return finalResult
+    }
+    return expression
 }
 @Composable
 fun ExtraButtons(it: Int, onButtonClick: (string: String) -> Unit) {

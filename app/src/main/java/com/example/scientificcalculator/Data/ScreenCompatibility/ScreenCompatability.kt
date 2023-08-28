@@ -1,4 +1,4 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.Data.ScreenCompatibility
 
 import androidx.compose.ui.unit.Dp
 

@@ -1,4 +1,4 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.Data.HomeScreenDataItems
 
 import androidx.compose.ui.graphics.Color
 import com.example.scientificcalculator.ui.theme.grey300

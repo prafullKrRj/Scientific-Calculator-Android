@@ -1,4 +1,4 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.Data.ConversionDataIterms
 
 import androidx.compose.ui.graphics.painter.Painter
 

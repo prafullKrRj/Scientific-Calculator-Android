@@ -1,4 +1,4 @@
-package com.example.scientificcalculator
+package com.example.scientificcalculator.HomeScreen
 
 import androidx.compose.runtime.Composable
 

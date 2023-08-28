@@ -1,4 +1,4 @@
-package com.example.scientificcalculator.UnirConverterUIs
+package com.example.scientificcalculator.Conversions.UnirConverterUIs
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,8 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SpeedConverter() {
+fun DataConverter() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Speed")
+        Text(text = "Data")
     }
 }
