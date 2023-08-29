@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
                     HorizontalPager(
                         pageCount = 2,
-                        state = pagerState
+                        state = pagerState,
                     ) { index ->
                         when (index){
                             0 -> HomeScreen()

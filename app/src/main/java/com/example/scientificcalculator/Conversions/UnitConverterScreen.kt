@@ -38,12 +38,13 @@ import com.example.scientificcalculator.Conversions.UnirConverterUIs.AreaC
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.BMI
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.DataConverter
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.LengthConverter
+import com.example.scientificcalculator.Conversions.UnirConverterUIs.MassConverter
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.NumeralSystem
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.SpeedConverter
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.TemperatureConverter
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.TimeConverter
 import com.example.scientificcalculator.Conversions.UnirConverterUIs.VolumeConverter
-import com.example.scientificcalculator.Data.ConversionDataIterms.UnitConversionItems
+import com.example.scientificcalculator.Data.ConversionDataItems.UnitConversionItems
 import com.example.scientificcalculator.Data.ScreenCompatibility.WindowInfo
 import com.example.scientificcalculator.Data.ScreenCompatibility.rememberWindowInfo
 import com.example.scientificcalculator.Navigation.Converters
@@ -61,6 +62,7 @@ fun UnitConverterScreen() {
         UnitConversionItems(painterResource(id = R.drawable.age), "Age"),
         UnitConversionItems(painterResource(id = R.drawable.area), "Area"),
         UnitConversionItems(painterResource(id = R.drawable.bmi), "BMI"),
+        UnitConversionItems(painterResource(id = R.drawable.weight), "Mass"),
         UnitConversionItems(painterResource(id = R.drawable.mobile_data), "Data"),
         UnitConversionItems(painterResource(id = R.drawable.length), "Length"),
         UnitConversionItems(painterResource(id = R.drawable.number_1), "Numeral System"),
@@ -82,7 +84,9 @@ fun UnitConverterScreen() {
             }else{
                 4
             }
-            LazyVerticalGrid(columns = GridCells.Fixed(columns), modifier = Modifier.padding(horizontal = 16.dp).fillMaxSize()){
+            LazyVerticalGrid(columns = GridCells.Fixed(columns), modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()){
                 items(list.size){ idx ->
                     Items(unitConversionItem = list[idx], navController = navController, coroutineScope)
                 }
@@ -92,31 +96,34 @@ fun UnitConverterScreen() {
             AgeConverter()
         }
         composable(Converters.Area.route){
-            AreaC(Converters.Area.route, navController)
+            AreaC(list[1].icon, list[1].title)
         }
         composable(Converters.BMI.route){
-            BMI()
+            BMI(list[2].icon, list[2].title)
+        }
+        composable(Converters.Mass.route){
+            MassConverter(list[3].icon, list[3].title)
         }
         composable(Converters.Data.route){
-            DataConverter()
+            DataConverter(list[4].icon, list[4].title)
         }
         composable(Converters.Length.route){
-            LengthConverter()
+            LengthConverter(list[5].icon, list[5].title)
         }
         composable(Converters.NumeralSystem.route){
-            NumeralSystem()
+            NumeralSystem(list[6].icon, list[6].title)
         }
         composable(Converters.Speed.route){
-            SpeedConverter()
+            SpeedConverter(list[7].icon, list[7].title)
         }
         composable(Converters.Temperature.route){
-            TemperatureConverter()
+            TemperatureConverter(list[8].icon, list[8].title)
         }
         composable(Converters.Volume.route){
-            VolumeConverter()
+            VolumeConverter(list[9].icon, list[9].title)
         }
         composable(Converters.Time.route){
-            TimeConverter()
+            TimeConverter(list[10].icon, list[10].title)
         }
 
     }
@@ -129,8 +136,7 @@ fun Items(unitConversionItem: UnitConversionItems, navController: NavController,
     Button(
         onClick = {
             coroutineScope.launch {
-                delay(100)
-
+                delay(20)
                 navController.navigate(unitConversionItem.title)
             }
         },

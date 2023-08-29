@@ -13,5 +13,5 @@ sealed class Converters(val route: String){
     object Temperature: Converters("Temperature")
     object Volume: Converters("Volume")
     object Time: Converters("Time")
-
+    object Mass: Converters("Mass")
 }
