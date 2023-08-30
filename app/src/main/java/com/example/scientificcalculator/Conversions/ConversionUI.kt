@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,32 +67,40 @@ fun ConversionUI(
     icon: Painter,
     secondParams: List<ConversionFactorTypes>?
 ) {
-    var selected by remember {
-        mutableStateOf(1)
-    }
-    var textOne by remember {
+
+    var textOne by rememberSaveable {
         mutableStateOf("0")
     }
-    var textTwo by remember {
+    var textTwo by rememberSaveable {
         mutableStateOf("0")
     }
-    var showSelectionDialog1 by remember {
-        mutableStateOf(false)
-    }
-    var showSelectionDialog2 by remember {
-        mutableStateOf(false)
-    }
+
     var text1 by remember {
         mutableStateOf(firstParams[0].name)
     }
     var text2 by remember {
         mutableStateOf(firstParams[1].name)
     }
-    var conversionFactor1 by remember {
-        mutableStateOf(firstParams[0].unitFromStandard)
+    var conversionFactor1 by rememberSaveable {
+        mutableStateOf(0)
     }
-    var conversionFactor2 by remember {
-        mutableStateOf(firstParams[1].unitFromStandard)
+    var conversionFactor2 by rememberSaveable {
+        mutableStateOf(1)
+    }
+    var selected by remember {
+        mutableStateOf(1)
+    }
+    var showSelectionDialogFrom by remember {
+        mutableStateOf(false)
+    }
+    var showSelectionDialogTo by remember {
+        mutableStateOf(false)
+    }
+    var isClicked1 by remember {
+        mutableStateOf(true)
+    }
+    var isClicked2 by remember {
+        mutableStateOf(true)
     }
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -132,7 +141,7 @@ fun ConversionUI(
             ){
                 Button(
                     onClick = {
-                              showSelectionDialog1 = true
+                              showSelectionDialogFrom = true
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
@@ -150,7 +159,7 @@ fun ConversionUI(
                 Spacer(modifier = Modifier.width(5.dp))
                 Text(
                     text = textOne,
-                    color = if (selected==1) Color.Yellow else Color.White,
+                    color = if (selected == 1) Color.Yellow else Color.White,
                     fontSize = 22.sp,
                     modifier = Modifier.clickable { selected = 1 }
                 )
@@ -167,7 +176,7 @@ fun ConversionUI(
             ){
                 Button(
                     onClick = {
-                            showSelectionDialog2 = true
+                            showSelectionDialogTo = true
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent
@@ -187,9 +196,7 @@ fun ConversionUI(
                     text = textTwo,
                     color = if (selected == 2) Color.Yellow else Color.White,
                     fontSize = 22.sp,
-                    modifier = Modifier.clickable {
-                        selected = 2
-                    }
+                    modifier = Modifier.clickable { selected = 2 }
                 )
             }
         }
@@ -212,20 +219,16 @@ fun ConversionUI(
             Button(
                 onClick =
                 {
-                    if (selected == 1){
-                        textOne = if (textOne.length == 1){
-                            "0"
-                        }else{
-                            textOne.substring(0, textOne.length-1)
-                        }
+                    if (textOne.length == 1){
+                        textOne = "0"
+                        textTwo = "0"
                     }else{
-                        textTwo = if (textTwo.length == 1){
-                            "0"
-                        }else{
-                            textTwo.substring(0, textTwo.length-1)
-                        }
+                        textOne = textOne.substring(0, textOne.length-1)
+                        textTwo = eval(
+                            textOne,
+                            firstParams[conversionFactor1].unitFromStandard, firstParams[conversionFactor2].unitFromStandard
+                        )
                     }
-
                 },
                 modifier = Modifier
                     .weight(.5f)
@@ -265,25 +268,48 @@ fun ConversionUI(
                             .clip(CircleShape)
                             .clickable {
                                 if (selected == 1) {
-                                    if (textOne == "0") textOne = numbers[it]
-                                    else textOne += numbers[it]
-                                    textTwo = evaluate(
-                                        1,
-                                        textOne.toDouble(),
-                                        textTwo.toDouble(),
-                                        conversionFactor1,
-                                        conversionFactor2
-                                    )
+                                    isClicked2 = true
+                                    if (textOne == "0"){
+                                        textOne = ""
+                                        isClicked1 = false
+                                        textOne += numbers[it]
+                                        textTwo = eval(
+                                            textOne,
+                                            firstParams[conversionFactor1].unitFromStandard,
+                                            firstParams[conversionFactor2].unitFromStandard
+                                        )
+                                    }else {
+                                        if (isClicked1 == true) {
+                                            textOne = ""
+                                            isClicked1 = false
+                                        }
+                                        textOne += numbers[it]
+                                        textTwo = eval(
+                                            textOne,
+                                            firstParams[conversionFactor1].unitFromStandard,
+                                            firstParams[conversionFactor2].unitFromStandard
+                                        )
+                                    }
                                 } else {
-                                    if (textTwo == "0") textTwo = numbers[it]
-                                    else textTwo += numbers[it]
-                                    textOne = evaluate(
-                                        2,
-                                        textOne.toDouble(),
-                                        textTwo.toDouble(),
-                                        conversionFactor1,
-                                        conversionFactor2
-                                    )
+                                    isClicked1 = true
+                                    if (textTwo == "0"){
+                                        textTwo = ""
+                                        isClicked2 = false
+                                        textTwo += numbers[it]
+                                        textOne = eval(
+                                            textTwo,
+                                            firstParams[conversionFactor2].unitFromStandard,
+                                            firstParams[conversionFactor1].unitFromStandard
+                                        )
+                                    }else {
+                                        if (isClicked2 == true) {
+                                            textTwo = ""
+                                            isClicked2 = false
+                                        }
+                                        textTwo += numbers[it]
+                                        textOne = eval(textTwo, firstParams[conversionFactor1].unitFromStandard, firstParams[it].unitFromStandard)
+                                    }
+
                                 }
                             }
                          },
@@ -293,44 +319,36 @@ fun ConversionUI(
                 }
             }
         }
-    }
-    if (showSelectionDialog1){
-        SelectionBox(list = firstParams){
-            if (it[0] != ""){
-                text1 = it[0]
-                conversionFactor1 = it[1].toBigDecimal()
-                textTwo = evaluate(1, textOne.toDouble(), textTwo.toDouble(), conversionFactor1, conversionFactor2)
+        if (showSelectionDialogFrom){
+            SelectionBox(list = firstParams){
+                if (it.isNotEmpty()){
+                    text1 = it[0]
+                    conversionFactor1 = it[1].toInt()
+                    if (selected == 1){
+                        textTwo = eval(textOne, firstParams[conversionFactor1].unitFromStandard, firstParams[conversionFactor2].unitFromStandard)
+                    }else{
+                        textOne = eval(textTwo, firstParams[conversionFactor2].unitFromStandard, firstParams[conversionFactor1].unitFromStandard)
+                    }
+                }
+                showSelectionDialogFrom = false
             }
-            showSelectionDialog1 = false
         }
-    }
-    if (showSelectionDialog2){
-        SelectionBox(list = firstParams){
-            if (it[0] != ""){
-                text2 = it[0]
-                conversionFactor2 = it[1].toBigDecimal()
-                textOne = evaluate(2, textOne.toDouble(), textTwo.toDouble(), conversionFactor1, conversionFactor2)
+        if (showSelectionDialogTo){
+            SelectionBox(list = firstParams){
+                if (it.isNotEmpty()) {
+                    text2 = it[0]
+                    conversionFactor2 = it[1].toInt()
+                    if (selected == 1){
+                        textTwo = eval(textOne, firstParams[conversionFactor1].unitFromStandard, firstParams[conversionFactor2].unitFromStandard)
+                    }else{
+                        textOne = eval(textTwo, firstParams[conversionFactor2].unitFromStandard, firstParams[conversionFactor1].unitFromStandard)
+                    }
+                }
+                showSelectionDialogTo = false
             }
-            showSelectionDialog2 = false
         }
     }
 }
-
-private fun evaluate(selected: Int, val1: Double, val2: Double, factor1: BigDecimal, factor2: BigDecimal): String{
-    var bi1 = val1.toBigDecimal()
-    var bi2 = val2.toBigDecimal()
-    try {
-        return if (selected == 1){
-            factor1.multiply(bi1).divide((if (factor2 == BigDecimal("0")) 1 else factor2) as BigDecimal?).toString()
-        }else{
-            factor2.multiply(bi2).divide((if (factor2 == BigDecimal("0")) 1 else factor2) as BigDecimal?).toString()
-        }
-    }catch (e: Exception){
-        return 0.toString()
-    }
-
-}
-
 @Composable
 fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: List<String>) -> Unit){
     var index by remember {
@@ -342,14 +360,19 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
     ) {
         LazyColumn(
-            modifier = Modifier.padding(14.dp).background(grey200, RoundedCornerShape(16.dp)).padding(start = 16.dp, top = 16.dp)
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 10.dp)
+                .background(grey200, RoundedCornerShape(16.dp))
+                .padding(top = 10.dp)
         ){
             items(list.size){
                 Row (
                     modifier = Modifier
                         .clickable {
-                            index = it }
+                            index = it
+                        }
                         .fillMaxWidth()
+                        .padding(horizontal = 6.dp)
                     , verticalAlignment = Alignment.CenterVertically
                 ){
                     RadioButton(
@@ -367,18 +390,20 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
                 Spacer(modifier = Modifier.height(8.dp))
             }
             item {
-                Row (modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp, end = 10.dp), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically){
+                Row (modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically){
                     Button(
                         onClick = {
-                            onclick(listOf(""))
+                            onclick(listOf())
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                     ) {
-                        Text(text = "Cancel", color = grey50)
+                        Text(text = "Cancel", color = grey800)
                     }
                     Button(
                         onClick = {
-                            onclick(listOf(list[index].name, list[index].unitFromStandard.toString()))
+                                  onclick(listOf(list[index].name, index.toString()))
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                     ) {
@@ -388,5 +413,15 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
             }
         }
 
+    }
+}
+private fun eval(fromValue: String, conversionFactor1: BigDecimal, conversionFactor2: BigDecimal): String{
+    return try {
+        val f = fromValue.toDouble()
+        val cf1 = conversionFactor1.toString().toDouble()
+        val cf2 = conversionFactor2.toString().toDouble()
+        (f * cf1 / cf2).toString()
+    }catch (e: Exception){
+        "1"
     }
 }
