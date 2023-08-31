@@ -33,8 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.scientificcalculator.R
 import com.example.scientificcalculator.ui.theme.grey100
 import com.example.scientificcalculator.ui.theme.grey200
 import com.example.scientificcalculator.ui.theme.grey50
@@ -143,46 +149,86 @@ fun AgeConverter(icon: Painter, title: String) {
                 ){
                     Row (
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ){
-                        Column {
-                            Text(text = "Age", color = grey200)
-                            Text(text = "13 years")
-                            Text(text = "0 months | 15 days")
+                        Column (
+                            horizontalAlignment = Alignment.Start,
+                            modifier = Modifier
+                                .weight(.4775f)
+                                .padding(start = 4.dp)
+                        ){
+                            Text(text = buildAnnotatedString {
+                                append(styledText("Age\n\n", grey200, 25))
+                                append(styledText("13", Color.Yellow, 35))
+                                append(styledText("   years\n", grey200, 18))
+                                append(styledText("0 months | 15 days", grey200, 13))
+                            })
                         }
                         Divider(
                             modifier = Modifier
+                                .weight(.045f)
+                                .padding(horizontal = 6.dp)
                                 .width(2.dp)
-                                .height(60.dp)
+                                .height(100.dp)
                         )
-                        Column {
-                            Text(text = "Age", color = grey200)
-                            Text(text = "13 years")
-                            Text(text = "0 months | 15 days")
+                        Column (
+                            modifier = Modifier.weight(.4775f),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ){
+                            Text(text = buildAnnotatedString {
+                                append(styledText("Next Birthday\n", Color.Yellow, 16))
+                            })
+                            Icon(
+                                painter = painterResource(id = R.drawable.birthday_cake),
+                                contentDescription = "Cake Icon",
+                                tint = Color.White,
+                                modifier = Modifier.size(40.dp)
+                            )
+                            Text(text = buildAnnotatedString {
+                                append(styledText("Friday\n", grey200, 16))
+                                append(styledText("11 months | 16 days", grey200, 13))
+                            })
                         }
                     }
                     Divider(Modifier.padding(vertical = 16.dp))
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ){
-                        Column {
-                            Text(text = "Age", color = grey200)
-                            Text(text = "13 years")
-                            Text(text = "0 months | 15 days")
-                        }
-                        Divider(
-                            modifier = Modifier
-                                .width(2.dp)
-                                .height(60.dp)
+
+                    Text(text = styledText("Details", Color.Yellow, 16), Modifier.padding(bottom = 8.dp))
+
+                    Box(modifier = Modifier
+                        .background(
+                            color = Color.Transparent,
+                            shape = RoundedCornerShape(16.dp)
                         )
-                        Column {
-                            Text(text = "Age", color = grey200)
-                            Text(text = "13 years")
-                            Text(text = "0 months | 15 days")
+                        .border(
+                            width = 2.dp,
+                            color = grey200,
+                            shape = RoundedCornerShape(8.dp)
+                        ).padding(8.dp)){
+                        Row (
+                            modifier = Modifier.padding(8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Column (
+                                modifier = Modifier.weight(.4775f)
+                            ){
+                                Text(text = "Years\nMonths\nWeeks\nDays\nHours\nMinutes", fontSize = 18.sp, color = grey50)
+                            }
+                            Divider(
+                                Modifier
+                                    .weight(.045f)
+                                    .padding(horizontal = 5.5.dp)
+                                    .width(2.dp)
+                                    .height(150.dp)
+                            )
+                            Column (
+                                modifier = Modifier.weight(.4775f).padding(start = 10.dp)
+                            ){
+                                Text(text = "Years\nMonths\nWeeks\nDays\nHours\nMinutes", fontSize = 18.sp, color = grey50)
+                            }
                         }
                     }
-
                 }
             }
         }
@@ -192,6 +238,18 @@ fun AgeConverter(icon: Painter, title: String) {
     }
 }
 
+fun styledText(text: String, color: Color, size: Int): AnnotatedString{
+    return buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(
+                color = color,
+                fontSize = size.sp
+            )
+        ){
+            append(text)
+        }
+    }
+}
 @Composable
 fun DateSelector() {
     
