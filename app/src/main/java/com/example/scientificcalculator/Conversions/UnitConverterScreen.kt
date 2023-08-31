@@ -93,7 +93,7 @@ fun UnitConverterScreen() {
             }
         }
         composable(Converters.Age.route){
-            AgeConverter()
+            AgeConverter(list[0].icon, list[0].title)
         }
         composable(Converters.Area.route){
             AreaC(list[1].icon, list[1].title)

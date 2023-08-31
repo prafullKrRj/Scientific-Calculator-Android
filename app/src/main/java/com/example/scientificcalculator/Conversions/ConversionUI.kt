@@ -18,18 +18,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,19 +41,15 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.example.scientificcalculator.Data.ConversionDataItems.ConversionFactorTypes
 import com.example.scientificcalculator.R
-import com.example.scientificcalculator.ui.theme.grey200
 import com.example.scientificcalculator.ui.theme.grey50
 import com.example.scientificcalculator.ui.theme.grey700
 import com.example.scientificcalculator.ui.theme.grey800
 import com.example.scientificcalculator.ui.theme.grey900
-import com.example.scientificcalculator.ui.theme.indigo400
 import java.math.BigDecimal
 
-private val numbers = listOf("7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", ".")
+val numbers = listOf("7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", ".")
 
 
 @Composable
@@ -279,7 +271,7 @@ fun ConversionUI(
                                             firstParams[conversionFactor2].unitFromStandard
                                         )
                                     }else {
-                                        if (isClicked1 == true) {
+                                        if (isClicked1) {
                                             textOne = ""
                                             isClicked1 = false
                                         }
@@ -349,72 +341,7 @@ fun ConversionUI(
         }
     }
 }
-@Composable
-fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: List<String>) -> Unit){
-    var index by remember {
-        mutableStateOf(0)
-    }
-    Dialog(onDismissRequest = {
 
-    },
-        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 10.dp)
-                .background(grey200, RoundedCornerShape(16.dp))
-                .padding(top = 10.dp)
-        ){
-            items(list.size){
-                Row (
-                    modifier = Modifier
-                        .clickable {
-                            index = it
-                        }
-                        .fillMaxWidth()
-                        .padding(horizontal = 6.dp)
-                    , verticalAlignment = Alignment.CenterVertically
-                ){
-                    RadioButton(
-                        selected = index == it,
-                        onClick = {
-                                  index = it
-                        },
-                        colors = RadioButtonDefaults.colors(selectedColor = indigo400)
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(text = list[it].name)
-                }
-            }
-            item{
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            item {
-                Row (modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically){
-                    Button(
-                        onClick = {
-                            onclick(listOf())
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
-                    ) {
-                        Text(text = "Cancel", color = grey800)
-                    }
-                    Button(
-                        onClick = {
-                                  onclick(listOf(list[index].name, index.toString()))
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
-                    ) {
-                        Text(text = "Ok", color = indigo400)
-                    }
-                }
-            }
-        }
-
-    }
-}
 private fun eval(fromValue: String, conversionFactor1: BigDecimal, conversionFactor2: BigDecimal): String{
     return try {
         val f = fromValue.toDouble()
