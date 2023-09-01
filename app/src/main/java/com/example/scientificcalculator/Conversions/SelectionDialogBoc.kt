@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.scientificcalculator.Data.ConversionDataItems.ConversionFactorTypes
-import com.example.scientificcalculator.ui.theme.grey200
-import com.example.scientificcalculator.ui.theme.grey800
-import com.example.scientificcalculator.ui.theme.indigo400
+import com.example.scientificcalculator.ui.theme.surface
+import com.example.scientificcalculator.ui.theme.tertiaryContainer
+import com.example.scientificcalculator.ui.theme.inversionPrimary
 
 @Composable
 fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: List<String>) -> Unit){
@@ -45,7 +45,7 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
         LazyColumn(
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 10.dp)
-                .background(grey200, RoundedCornerShape(16.dp))
+                .background(surface, RoundedCornerShape(16.dp))
                 .padding(top = 10.dp)
         ){
             items(list.size){
@@ -63,7 +63,7 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
                         onClick = {
                             index = it
                         },
-                        colors = RadioButtonDefaults.colors(selectedColor = indigo400)
+                        colors = RadioButtonDefaults.colors(selectedColor = inversionPrimary)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(text = list[it].name)
@@ -82,7 +82,7 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                     ) {
-                        Text(text = "Cancel", color = grey800)
+                        Text(text = "Cancel", color = tertiaryContainer)
                     }
                     Button(
                         onClick = {
@@ -90,7 +90,7 @@ fun SelectionBox(list: List<ConversionFactorTypes>, onclick: (firstParameter: Li
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
                     ) {
-                        Text(text = "Ok", color = indigo400)
+                        Text(text = "Ok", color = inversionPrimary)
                     }
                 }
             }

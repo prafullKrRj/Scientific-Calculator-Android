@@ -43,9 +43,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.scientificcalculator.Data.HomeScreenDataItems.ButtonFeature
 import com.example.scientificcalculator.Data.HomeScreenDataItems.GetButtonList
-import com.example.scientificcalculator.ui.theme.grey800
-import com.example.scientificcalculator.ui.theme.grey900
 import com.example.scientificcalculator.R
+import com.example.scientificcalculator.ui.theme.background
+import com.example.scientificcalculator.ui.theme.tertiaryContainer
 import com.faendir.rhino_android.RhinoAndroidHelper
 import org.mozilla.javascript.ImporterTopLevel
 
@@ -58,7 +58,7 @@ private val extraButtonsList = GetButtonList().getExtraButton()
 fun ForCompact() {
     Column(
         modifier = Modifier
-            .background(grey900)
+            .background(background)
             .fillMaxSize()
     ) {
 
@@ -128,7 +128,7 @@ fun ForCompact() {
                         )
                     )
                     .fillMaxWidth()
-                    .background(grey800),
+                    .background(tertiaryContainer),
                 contentPadding = PaddingValues(
                     16.dp,
                     8.dp,
@@ -163,7 +163,7 @@ fun ForCompact() {
             columns = GridCells.Fixed(columns),
             contentPadding = PaddingValues(start = 16.dp, bottom = 16.dp, end = 16.dp, top = 8.dp),
             modifier = Modifier
-                .background(grey800)
+                .background(tertiaryContainer)
                 .animateContentSize(
                     animationSpec = tween(
                         durationMillis = 500,
@@ -251,7 +251,7 @@ fun Buttons(buttonFeature: ButtonFeature, onButtonClick : (string: String) -> Un
         modifier = Modifier
             .padding(5.dp)
             .aspectRatio(1f)
-            .background(color = grey800, shape = CircleShape),
+            .background(color = tertiaryContainer, shape = CircleShape),
         colors = ButtonDefaults.buttonColors(containerColor = buttonFeature.buttonColor)
     ){
         if (buttonFeature.buttonText == "X"){

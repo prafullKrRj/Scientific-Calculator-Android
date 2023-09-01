@@ -1,6 +1,5 @@
 package com.example.scientificcalculator
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,21 +28,21 @@ import androidx.compose.ui.unit.dp
 import com.example.scientificcalculator.Conversions.UnitConverterScreen
 import com.example.scientificcalculator.HomeScreen.HomeScreen
 import com.example.scientificcalculator.ui.theme.ScientificCalculatorTheme
-import com.example.scientificcalculator.ui.theme.grey50
-import com.example.scientificcalculator.ui.theme.grey900
+import com.example.scientificcalculator.ui.theme.background
+import com.example.scientificcalculator.ui.theme.primary
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         setContent {
             ScientificCalculatorTheme {
                 val pagerState = rememberPagerState()
 
                 Column(modifier = Modifier
                     .fillMaxSize()
-                    .background(grey900)){
+                    .background(background)){
 
 
                     Row (
@@ -57,7 +56,7 @@ class MainActivity : ComponentActivity() {
                             imageVector =
                             if (pagerState.currentPage == 0) Icons.Filled.Home else Icons.Outlined.Home,
                             contentDescription = "Home",
-                            tint = grey50,
+                            tint = primary,
                             modifier = Modifier.size(30.dp)
 
                         )
@@ -69,7 +68,7 @@ class MainActivity : ComponentActivity() {
                             ),
                             "More",
                             Modifier.size(25.dp),
-                            grey50
+                            primary
                         )
                         
                         Icon(imageVector = Icons.Default.MoreVert, contentDescription = "About", tint = Color.White)

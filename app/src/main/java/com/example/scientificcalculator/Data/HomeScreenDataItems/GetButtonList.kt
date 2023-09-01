@@ -1,17 +1,17 @@
 package com.example.scientificcalculator.Data.HomeScreenDataItems
 
 import androidx.compose.ui.graphics.Color
-import com.example.scientificcalculator.ui.theme.grey300
-import com.example.scientificcalculator.ui.theme.grey500
-import com.example.scientificcalculator.ui.theme.grey700
-import com.example.scientificcalculator.ui.theme.indigo400
+import com.example.scientificcalculator.ui.theme.onBackground
+import com.example.scientificcalculator.ui.theme.onSecondaryContainer
+import com.example.scientificcalculator.ui.theme.secondaryContainer
+import com.example.scientificcalculator.ui.theme.inversionPrimary
 
 class GetButtonList {
 
-    private val color1: Color = grey700
-    private val color2: Color = grey300
-    private val color3: Color = grey500
-    private val color4: Color = indigo400
+    private val color1: Color = secondaryContainer
+    private val color2: Color = onBackground
+    private val color3: Color = onSecondaryContainer
+    private val color4: Color = inversionPrimary
     fun compactButtonList() : List<ButtonFeature>{
         return listOf(
             ButtonFeature(color1, "AC"),

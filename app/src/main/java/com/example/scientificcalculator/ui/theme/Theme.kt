@@ -10,33 +10,33 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+        primary = Color(0xFFeceff1),
+        tertiary = Color(0xFFcfd8dc),
+        surface = Color(0xFFb0bec5),
+        onBackground = Color(0xFF90a4ae),
+        secondary = Color(0xFF78909c),
+        onSecondaryContainer = Color(0xFF607d8b),
+        primaryContainer = Color(0xFF546e7a),
+        secondaryContainer = Color(0xFF455a64),
+        tertiaryContainer = Color(0xFF37474f),
+        background = Color(0xFF263238),
+        inversePrimary = Color(0xFF5c6bc0)
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+
 )
-
 @Composable
 fun ScientificCalculatorTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

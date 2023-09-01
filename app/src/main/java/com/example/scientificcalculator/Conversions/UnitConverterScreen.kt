@@ -49,7 +49,7 @@ import com.example.scientificcalculator.Data.ScreenCompatibility.WindowInfo
 import com.example.scientificcalculator.Data.ScreenCompatibility.rememberWindowInfo
 import com.example.scientificcalculator.Navigation.Converters
 import com.example.scientificcalculator.R
-import com.example.scientificcalculator.ui.theme.grey800
+import com.example.scientificcalculator.ui.theme.tertiaryContainer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -144,8 +144,8 @@ fun Items(unitConversionItem: UnitConversionItems, navController: NavController,
         modifier = Modifier
             .padding(16.dp)
             .aspectRatio(1f)
-            .background(color = grey800, shape = CircleShape),
-        colors = ButtonDefaults.buttonColors(containerColor = grey800)
+            .background(color = tertiaryContainer, shape = CircleShape),
+        colors = ButtonDefaults.buttonColors(containerColor = tertiaryContainer)
         ) {
         Column (
             verticalArrangement = Arrangement.Center,

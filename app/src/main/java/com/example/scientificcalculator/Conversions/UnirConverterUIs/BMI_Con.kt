@@ -50,12 +50,12 @@ import com.example.scientificcalculator.Conversions.SelectionBox
 import com.example.scientificcalculator.Conversions.numbers
 import com.example.scientificcalculator.Data.ConversionDataItems.ConversionFactorTypes
 import com.example.scientificcalculator.R
-import com.example.scientificcalculator.ui.theme.grey200
-import com.example.scientificcalculator.ui.theme.grey300
-import com.example.scientificcalculator.ui.theme.grey50
-import com.example.scientificcalculator.ui.theme.grey700
-import com.example.scientificcalculator.ui.theme.grey800
-import com.example.scientificcalculator.ui.theme.grey900
+import com.example.scientificcalculator.ui.theme.surface
+import com.example.scientificcalculator.ui.theme.onBackground
+import com.example.scientificcalculator.ui.theme.primary
+import com.example.scientificcalculator.ui.theme.secondaryContainer
+import com.example.scientificcalculator.ui.theme.tertiaryContainer
+import com.example.scientificcalculator.ui.theme.background
 
 private fun getFactorOne(): List<ConversionFactorTypes>{
     return listOf(
@@ -135,7 +135,7 @@ fun BMI(icon: Painter, title: String) {
         }
         Column (
             modifier = Modifier
-                .background(grey700)
+                .background(secondaryContainer)
                 .padding(vertical = 15.dp)
                 .weight(.5f),
             verticalArrangement = Arrangement.SpaceAround
@@ -195,7 +195,7 @@ fun BMI(icon: Painter, title: String) {
                         containerColor = Color.Transparent
                     ),
                 ) {
-                    Text(text = text2, color = grey50)
+                    Text(text = text2, color = primary)
                     Spacer(modifier = Modifier.width(2.dp))
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
@@ -228,9 +228,9 @@ fun BMI(icon: Painter, title: String) {
                     .weight(.5f)
                     .padding(12.dp)
                     .height(40.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = grey700)
+                colors = ButtonDefaults.buttonColors(containerColor = secondaryContainer)
             ) {
-                Text(text = "AC", color = grey50)
+                Text(text = "AC", color = primary)
             }
             Button(
                 onClick =
@@ -246,12 +246,12 @@ fun BMI(icon: Painter, title: String) {
                     .weight(.5f)
                     .padding(12.dp)
                     .height(40.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = grey700)
+                colors = ButtonDefaults.buttonColors(containerColor = secondaryContainer)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.delete),
                     contentDescription = "delete",
-                    tint = grey50
+                    tint = primary
                 )
             }
             Button(
@@ -264,9 +264,9 @@ fun BMI(icon: Painter, title: String) {
                     .weight(.5f)
                     .padding(12.dp)
                     .height(40.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = grey700)
+                colors = ButtonDefaults.buttonColors(containerColor = secondaryContainer)
             ) {
-                Text(text = "GO", color = grey50)
+                Text(text = "GO", color = primary)
             }
         }
 
@@ -288,7 +288,7 @@ fun BMI(icon: Painter, title: String) {
                                 .size(100.dp)
                                 .padding(6.dp)
                                 .background(
-                                    if (numbers[it] != "") grey800 else grey900,
+                                    if (numbers[it] != "") tertiaryContainer else background,
                                     CircleShape
                                 )
                         }else{
@@ -296,7 +296,7 @@ fun BMI(icon: Painter, title: String) {
                                 .size(100.dp)
                                 .padding(6.dp)
                                 .background(
-                                    if (numbers[it] != "") grey800 else grey900,
+                                    if (numbers[it] != "") tertiaryContainer else background,
                                     CircleShape
                                 )
                                 .clip(CircleShape)
@@ -332,7 +332,7 @@ fun BMI(icon: Painter, title: String) {
                         },
                         contentAlignment = Alignment.Center
                     ){
-                        Text(text = numbers[it], color = grey50, fontSize = 20.sp)
+                        Text(text = numbers[it], color = primary, fontSize = 20.sp)
                     }
                 }
             }
@@ -401,9 +401,9 @@ fun ShowDetails(bmi: String, cat: String) {
                     .padding(20.dp)
                     .wrapContentWidth()
                     .wrapContentHeight()
-                    .border(BorderStroke(2.dp, grey700), shape = RoundedCornerShape(16.dp))
+                    .border(BorderStroke(2.dp, secondaryContainer), shape = RoundedCornerShape(16.dp))
                     .background(
-                        grey800,
+                        tertiaryContainer,
                         RoundedCornerShape(16.dp)
                     ),
                 contentAlignment = Alignment.Center
@@ -443,7 +443,7 @@ fun ShowDetails(bmi: String, cat: String) {
                                 fontSize = 15.sp
                             )
                         }
-                        Text(text = "kg / m²", color = grey200, fontSize = 15.sp)
+                        Text(text = "kg / m²", color = surface, fontSize = 15.sp)
                         Spacer(modifier = Modifier.height(30.dp))
                         Row (
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -459,7 +459,7 @@ fun ShowDetails(bmi: String, cat: String) {
                                     .background(Color(0xFF18FFFF), RoundedCornerShape(5.dp))
                                     .padding(4.5.dp)
                                     .width(80.dp))
-                                Text(text = "(16.5 - 18.5)", fontSize = 12.sp, color = grey300)
+                                Text(text = "(16.5 - 18.5)", fontSize = 12.sp, color = onBackground)
                             }
                             Column(
 
@@ -473,7 +473,7 @@ fun ShowDetails(bmi: String, cat: String) {
                                     .background(Color(0xFF00E676), RoundedCornerShape(5.dp))
                                     .padding(4.5.dp)
                                     .width(80.dp))
-                                Text(text = "(18.5 - 25)", fontSize = 12.sp, color = grey300)
+                                Text(text = "(18.5 - 25)", fontSize = 12.sp, color = onBackground)
 
                             }
                             Column(
@@ -488,7 +488,7 @@ fun ShowDetails(bmi: String, cat: String) {
                                         .background(Color(0xFFFF1744), RoundedCornerShape(5.dp))
                                         .padding(4.5.dp)
                                         .width(80.dp))
-                                Text(text = "(25 & above)", fontSize = 12.sp, color = grey300)
+                                Text(text = "(25 & above)", fontSize = 12.sp, color = onBackground)
 
                             }
                         }

@@ -43,10 +43,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.scientificcalculator.Data.ConversionDataItems.ConversionFactorTypes
 import com.example.scientificcalculator.R
-import com.example.scientificcalculator.ui.theme.grey50
-import com.example.scientificcalculator.ui.theme.grey700
-import com.example.scientificcalculator.ui.theme.grey800
-import com.example.scientificcalculator.ui.theme.grey900
+import com.example.scientificcalculator.ui.theme.background
+import com.example.scientificcalculator.ui.theme.primary
+import com.example.scientificcalculator.ui.theme.secondaryContainer
+import com.example.scientificcalculator.ui.theme.tertiaryContainer
 import java.math.BigDecimal
 
 val numbers = listOf("7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", ".")
@@ -117,7 +117,7 @@ fun ConversionUI(
         }
         Column (
             modifier = Modifier
-                .background(grey700)
+                .background(secondaryContainer)
                 .padding(vertical = 15.dp)
                 .weight(.5f),
             verticalArrangement = Arrangement.SpaceAround
@@ -140,7 +140,7 @@ fun ConversionUI(
                     ),
                 ) {
 
-                    Text(text = text1, color = grey50)
+                    Text(text = text1, color = primary)
                     Spacer(modifier = Modifier.width(2.dp))
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
@@ -204,9 +204,9 @@ fun ConversionUI(
                     .weight(.5f)
                     .padding(12.dp)
                     .height(40.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = grey700)
+                colors = ButtonDefaults.buttonColors(containerColor = secondaryContainer)
             ) {
-                Text(text = "AC", color = grey50)
+                Text(text = "AC", color = primary)
             }
             Button(
                 onClick =
@@ -226,12 +226,12 @@ fun ConversionUI(
                     .weight(.5f)
                     .padding(12.dp)
                     .height(40.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = grey700)
+                colors = ButtonDefaults.buttonColors(containerColor = secondaryContainer)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.delete),
                     contentDescription = "delete",
-                    tint = grey50)
+                    tint = primary)
 
             }
         }
@@ -251,12 +251,12 @@ fun ConversionUI(
                         Modifier
                             .size(100.dp)
                             .padding(6.dp)
-                            .background(if (numbers[it] != "") grey800 else grey900, CircleShape)
+                            .background(if (numbers[it] != "") tertiaryContainer else background, CircleShape)
                     }else{
                         Modifier
                             .size(100.dp)
                             .padding(6.dp)
-                            .background(if (numbers[it] != "") grey800 else grey900, CircleShape)
+                            .background(if (numbers[it] != "") tertiaryContainer else background, CircleShape)
                             .clip(CircleShape)
                             .clickable {
                                 if (selected == 1) {
@@ -307,7 +307,7 @@ fun ConversionUI(
                          },
                     contentAlignment = Alignment.Center
                 ){
-                    Text(text = numbers[it], color = grey50, fontSize = 20.sp)
+                    Text(text = numbers[it], color = primary, fontSize = 20.sp)
                 }
             }
         }

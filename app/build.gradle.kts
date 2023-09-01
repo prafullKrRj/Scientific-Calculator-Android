@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.scientificcalculator"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha04")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
@@ -73,6 +73,6 @@ dependencies {
 
 
     implementation ("com.faendir.rhino:rhino-android:1.5.2")
-
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:1.1.6")
 
 }
